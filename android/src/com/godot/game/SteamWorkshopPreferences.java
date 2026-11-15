@@ -70,8 +70,16 @@ public final class SteamWorkshopPreferences {
 		preferences(context).edit().putString(KEY_CUSTOM_DOWNLOAD_BRANCH, sanitizeBranch(branch)).apply();
 	}
 
+	/**
+	 * The third-party forwarding route only helps on networks where Steam Community/API is unreachable.
+	 * Keep it on by default for Chinese locales and off elsewhere; an explicit user choice always wins.
+	 */
+	static boolean defaultDirectAccessEnabled() {
+		return "zh".equals(java.util.Locale.getDefault().getLanguage());
+	}
+
 	public static boolean isDirectAccessEnabled(Context context) {
-		return preferences(context).getBoolean(KEY_DIRECT_ACCESS_ENABLED, true);
+		return preferences(context).getBoolean(KEY_DIRECT_ACCESS_ENABLED, defaultDirectAccessEnabled());
 	}
 
 	public static void setDirectAccessEnabled(Context context, boolean enabled) {

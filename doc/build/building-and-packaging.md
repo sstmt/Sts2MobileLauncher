@@ -86,7 +86,7 @@ STS2_ORIGINAL_V1130_REFERENCE_DIR=/path/to/v0.113.0/data_sts2_windows_x86_64
 - applicationId：`com.megacrit.sts2re`
 - versionName/versionCode：`v0.1.12` / `114`
 
-`release` build type 当前保留 `debuggable true`，便于本地 sideload 和 `run-as` 验证。package 脚本默认使用 `RELEASE_KEYSTORE_*` 或 `local.properties` 中的签名配置；本地测试可使用 Android debug keystore，正式发布前必须重新配置签名和安全策略。
+`release` build type 默认 `debuggable false`，避免 `run-as`/ADB 读取 app 私有目录中的令牌与存档；需要本地 sideload 后用 `run-as` 验证时，用 `ORG_GRADLE_PROJECT_sts2_release_debuggable=true` 构建（`tools/debug/sts2-adb-debug.sh build` 会自动设置）。package 脚本默认使用 `RELEASE_KEYSTORE_*` 或 `local.properties` 中的签名配置；本地测试可使用 Android debug keystore，正式发布前必须重新配置签名和安全策略。
 
 本地 payload 与 MOD 导入现在保留 ZIP 的 Java 解包路径，并通过 `libarchive-android` 支持常见非 ZIP 归档（RAR/RAR5、7z、tar/压缩 tar、gzip、bzip2、xz、zstd、lz4、cab、cpio、ar、lha 等）。归档仍先进入现有 staging，再做路径/内容校验；非 ZIP 归档的加密条目、符号链接/硬链接、设备等特殊文件、超过 200,000 个条目、单文件 8 GiB 或总展开 16 GiB 的输入会 fail closed。只有非 ZIP 导入首次使用归档解析器时加载 native library，普通 ZIP/单文件 MOD 不增加运行时解压开销；CPU、内存和临时磁盘成本只发生在导入期间。
 

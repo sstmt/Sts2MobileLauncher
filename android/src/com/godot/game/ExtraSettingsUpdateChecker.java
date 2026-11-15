@@ -18,6 +18,11 @@ import java.util.regex.Pattern;
 
 public final class ExtraSettingsUpdateChecker {
 	public static final String GAME_DOWNLOAD_URL = "https://pan.quark.cn/s/9e8dcfd284cb";
+	/** The network-drive share link is only offered in Chinese locales. */
+	public static boolean isGameDownloadLinkAvailable() {
+		return "zh".equals(java.util.Locale.getDefault().getLanguage());
+	}
+
 	public static final String RELEASES_URL = "https://github.com/ModinMobileSTS/Sts2MobileLauncher/releases";
 
 	private static final String TAG = "Sts2UpdateChecker";

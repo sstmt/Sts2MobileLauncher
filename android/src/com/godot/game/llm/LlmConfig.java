@@ -20,7 +20,7 @@ public final class LlmConfig {
 		HttpUrl url = HttpUrl.parse(baseUrl);
 		if (url == null || !url.username().isEmpty() || !url.password().isEmpty()
 			|| url.query() != null || url.fragment() != null) {
-			throw new IllegalArgumentException("Base URL 必须是无账号、查询参数或片段的 HTTP(S) 地址");
+			throw new IllegalArgumentException(Ja.t("Base URL 必须是无账号、查询参数或片段的 HTTP(S) 地址", "Base URL は、ユーザー情報・クエリ・フラグメントを含まない HTTP(S) アドレスにしてください"));
 		}
 		String path = url.encodedPath();
 		while (path.endsWith("/")) path = path.substring(0, path.length() - 1);
@@ -33,9 +33,9 @@ public final class LlmConfig {
 
 	public void validate() {
 		endpoint();
-		if (model.isEmpty()) throw new IllegalArgumentException("请填写 Model ID");
+		if (model.isEmpty()) throw new IllegalArgumentException(Ja.t("请填写 Model ID", "Model ID を入力してください"));
 		if (apiKey.indexOf('\n') >= 0 || apiKey.indexOf('\r') >= 0) {
-			throw new IllegalArgumentException("API Key 不能含换行");
+			throw new IllegalArgumentException(Ja.t("API Key 不能含换行", "API Key に改行を含めることはできません"));
 		}
 	}
 }

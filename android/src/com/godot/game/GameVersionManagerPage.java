@@ -216,7 +216,9 @@ public final class GameVersionManagerPage {
 		cloud.setOnClickListener(v -> actions.openUrl(ExtraSettingsUpdateChecker.GAME_DOWNLOAD_URL));
 		actionsRow.addView(importZip, weightedButtonParams(0));
 		actionsRow.addView(steam, weightedButtonParams(8));
-		actionsRow.addView(cloud, weightedButtonParams(8));
+		if (ExtraSettingsUpdateChecker.isGameDownloadLinkAvailable()) {
+			actionsRow.addView(cloud, weightedButtonParams(8));
+		}
 		ExtraSettingsUi.addSmallSpacing(content, actionsRow);
 
 		if (payloadManager.hasBundledPayload() && !payloadStatus.ready) {

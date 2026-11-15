@@ -254,9 +254,10 @@ android {
         }
 
         release {
-            // Keep `run-as` available for sideload validation while default
-            // packaging uses release optimizations.
-            debuggable true
+            // Not debuggable by default so `run-as`/ADB cannot read tokens and saves in the
+            // app's private storage. For sideload validation with tools/debug, build with
+            // ORG_GRADLE_PROJECT_sts2_release_debuggable=true.
+            debuggable((project.findProperty('sts2_release_debuggable') ?: 'false').toString().toBoolean())
 
             // Signing and zip-aligning are skipped for prebuilt builds, but
             // performed for Godot gradle builds.

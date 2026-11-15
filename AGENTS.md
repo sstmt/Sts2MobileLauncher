@@ -525,7 +525,7 @@ REFERENCE_FLAVOR=original-v0.107.0 tools/android/build-port-mod.sh
 - versionName/versionCode：`v0.1.12` / `114`
 - 默认测试签名：由 `.env` 的 `RELEASE_KEYSTORE_*` 或 `local.properties` 的 `android.release_keystore_*` 提供；示例使用 `${HOME}/.android/debug.keystore`。
 
-注意：`release` build type 当前仍保留 `debuggable true`，便于 sideload 后使用 `run-as` 验证；正式发布前必须重新审视签名、debuggable、混淆、资源优化、FileProvider 暴露范围。
+注意：`release` build type 默认 `debuggable false`；需要 `run-as` 验证时用 `ORG_GRADLE_PROJECT_sts2_release_debuggable=true` 构建（`tools/debug/sts2-adb-debug.sh build` 自动设置），普通 `build_importer_apk.sh` 产物不能 `run-as`。日语本地化：`android/res/values-ja/` 与 `values/` 保持同名同格式参数；无 Context 的 llm/loganalysis 文案用 `llm/Ja.t(原文, 日语)` 按系统语言选择。创意工坊兼容访问与网盘下载入口仅在 zh 语言环境默认开启/显示（用户显式选择优先）；`GodotApp` 会丢弃外部 Intent 的 `command_line_params`。正式发布前必须重新审视签名、debuggable、混淆、资源优化、FileProvider 暴露范围。
 
 本仓库构建使用 `.env` 中配置的 JDK/Android SDK。容器系统自带 Java 可能只是 JRE，不能直接编译 Java；请使用：
 

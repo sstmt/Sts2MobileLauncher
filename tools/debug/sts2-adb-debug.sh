@@ -520,7 +520,8 @@ PY
 }
 
 build_apk() {
-  "$ROOT/tools/package/build_importer_apk.sh"
+  # run-as based automation needs a debuggable build; normal packaging is not debuggable.
+  ORG_GRADLE_PROJECT_sts2_release_debuggable=true "$ROOT/tools/package/build_importer_apk.sh"
 }
 
 install_apk() {

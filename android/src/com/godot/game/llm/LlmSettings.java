@@ -24,7 +24,7 @@ public final class LlmSettings {
 			return new LlmConfig(p.getString("base_url", ""), p.getString("api_key", ""),
 				p.getString("model", ""), p.getString("effort", ""));
 		} catch (Exception e) {
-			throw new IOException("无法读取加密配置，请检查设备密钥存储；未清除原配置");
+			throw new IOException(Ja.t("无法读取加密配置，请检查设备密钥存储；未清除原配置", "暗号化された設定を読み込めません。端末のキーストアを確認してください。元の設定は消去されていません"));
 		}
 	}
 
@@ -37,7 +37,7 @@ public final class LlmSettings {
 				throw new IOException();
 			}
 		} catch (Exception e) {
-			throw new IOException("加密保存失败，配置未生效；不会退回明文保存");
+			throw new IOException(Ja.t("加密保存失败，配置未生效；不会退回明文保存", "暗号化保存に失敗し、設定は反映されていません。平文での保存には切り替えません"));
 		}
 	}
 }

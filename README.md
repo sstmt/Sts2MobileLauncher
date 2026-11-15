@@ -1,6 +1,7 @@
 
 <div align="right">
-  <strong><a href="README_CN.md">🇨🇳 简体中文 (Chinese)</a></strong>
+  <strong><a href="README_CN.md">🇨🇳 简体中文 (Chinese)</a></strong> ·
+  <strong><a href="README_JA.md">🇯🇵 日本語 (Japanese)</a></strong>
 </div>
 
 <p align="center">
@@ -37,7 +38,7 @@
 This project is an experimental, unofficial Android port and launcher framework for *Slay the Spire 2*. It **DOES NOT** contain any base game files. Instead, it provides an Android shell that allows players to import and run their legally owned PC game files on mobile devices, featuring support for Mod loading, Steam Workshop browsing/direct ID or URL opening/download tracking with anonymous public browsing and WorkshopOnAndroid-compatible access fallback, local save snapshots, Steam Cloud and WebDAV save synchronization, and launcher update checks from the About page. When an update is found, the launcher can open either the GitHub release page or the Bilibili dynamic feed.
 
 **The core architecture consists of three layers:**
-1. **Android Launcher Shell (`android/`):** Handles game data importing, Steam login and game downloading, Steam Workshop public browsing, direct ID/URL opening, and download tracking with default compatible-access routing for networks where Steam Community/API or SteamPipe CDN direct connections time out, local save snapshots, Steam Cloud/WebDAV save syncing, and local file/MOD management. Once everything is ready, it boots up the Godot game process.
+1. **Android Launcher Shell (`android/`):** Handles game data importing, Steam login and game downloading, Steam Workshop public browsing, direct ID/URL opening, and download tracking with optional compatible-access routing (through the third-party `rmbgame.net` forwarders; on by default only when the device language is Chinese) for networks where Steam Community/API or SteamPipe CDN direct connections time out, local save snapshots, Steam Cloud/WebDAV save syncing, and local file/MOD management. Once everything is ready, it boots up the Godot game process.
 The launcher utility pages use a compact dark Material 3 shell, including toolbars, dialogs, and bottom sheets. File Browser provides clickable breadcrumbs, a clipboard banner, name/time/size sorting, add/import actions, and readable contextual multi-select controls. Logs provides source/date filtering and a **Package latest** action that shares the newest live `godot.log` and `sts2.log`, excluding archives. File multi-selection offers share/export; the line-numbered viewer switches between whole-file actions and copy/share/expand-range actions, with working wrap/horizontal-scroll modes, in-file search, and smooth pinch-to-resize text. The Workshop page is unchanged by this UI update.
 The log list scan runs off the UI thread with an iterative traversal that avoids per-directory sorting and unnecessary canonical-path work. It publishes discovered entries in small batches, so the list can populate progressively while a native circular progress indicator and scanning status remain visible until traversal completes.
 2. **Android Compatibility Pack (`port-mod/` submodule):** Acts as a low-level hook (based on Harmony), loaded at the very beginning of the game boot process. It intercepts and fixes various PC-to-Android incompatibilities (e.g., input adaptation, path redirection, PC-specific shader replacement, Mod loader bridging).
@@ -107,7 +108,7 @@ The creation of this project relies heavily on the explorations of the open-sour
 For the safety of your device and accounts, please pay strict attention to the following when using and compiling this app:
 
 1. **ADB & `Debuggable` Risks:**
-   The current default release build configuration **keeps `debuggable=true`** (to facilitate log capture in case of crashes). This means any computer or malicious software connected to your phone with `ADB` permissions can extract data from this app (including encrypted Steam credentials). **NEVER grant ADB debugging permissions to untrusted computers or third-party app stores.**
+   Release builds are **not debuggable by default**, so `run-as` cannot read the app's private data. Building with `ORG_GRADLE_PROJECT_sts2_release_debuggable=true` (used by `tools/debug/sts2-adb-debug.sh build`) produces a debuggable APK: any computer with `ADB` access can then extract data from this app (including encrypted Steam credentials). Only use such builds for testing, and **NEVER grant ADB debugging permissions to untrusted computers or third-party app stores.**
 2. **Steam Account Security:**
    - This app will **NEVER** upload your Steam account password to any third-party server. The password and the Steam Guard code entered for the current login remain in memory only; they are not written to disk, an Android service intent, or logs.
    - After Steam accepts the initial credential request, the launcher temporarily stores only an encrypted, short-lived authentication transaction handle so an interrupted login can resume. The handle expires automatically and contains Steam routing/status data, not the password or one-time Guard code.

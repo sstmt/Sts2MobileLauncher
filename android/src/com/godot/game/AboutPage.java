@@ -43,7 +43,12 @@ public final class AboutPage {
 		root.addView(ExtraSettingsUi.title(context, R.string.tab_about));
 
 		addResponsiveCards(root, authorCard(), linkCard(R.drawable.ic_desktop_windows_24, R.string.steam_link_title, R.string.steam_link_desc, STEAM_URL));
-		addResponsiveCards(root, linkCard(R.drawable.ic_download_24, R.string.download_link_title, R.string.download_link_desc, GAME_DOWNLOAD_URL), linkCard(R.drawable.ic_error_outline_24, R.string.issue_feedback_title, R.string.issue_feedback_desc, LAUNCHER_NEW_ISSUE_URL));
+		View issueCard = linkCard(R.drawable.ic_error_outline_24, R.string.issue_feedback_title, R.string.issue_feedback_desc, LAUNCHER_NEW_ISSUE_URL);
+		if (ExtraSettingsUpdateChecker.isGameDownloadLinkAvailable()) {
+			addResponsiveCards(root, linkCard(R.drawable.ic_download_24, R.string.download_link_title, R.string.download_link_desc, GAME_DOWNLOAD_URL), issueCard);
+		} else {
+			ExtraSettingsUi.addCardSpacing(root, issueCard);
+		}
 		ExtraSettingsUi.addCardSpacing(root, updateCheckCard());
 		ExtraSettingsUi.addCardSpacing(root, friendHeader());
 		addResponsiveCards(root, linkCard(R.drawable.ic_extension_24, R.string.friend_link_amethyst_title, R.string.friend_link_amethyst_desc, SLAY_AMETHYST_URL), linkCard(R.drawable.ic_restart_alt_24, R.string.friend_link_quick_restart_title, R.string.friend_link_quick_restart_desc, QUICK_RESTART_URL));

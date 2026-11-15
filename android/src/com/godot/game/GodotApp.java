@@ -127,6 +127,7 @@ public class GodotApp extends GodotActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		stripExternalCommandLineParams(getIntent());
 		Log.i(TAG, "DIAG GodotApp.onCreate begin savedInstanceState=" + (savedInstanceState != null) + " intent=" + describeIntent(getIntent()));
 		AndroidRuntimeEnvironment.configure(this, TAG);
 		Sts2LogcatCollector.startForSelectedProfile(this);
@@ -198,6 +199,32 @@ public class GodotApp extends GodotActivity {
 				Log.w(TAG, "Unable to attach in-game overlay (" + reason + ")", exception);
 			}
 		});
+	}
+
+	/**
+	 * GodotApp is exported for launcher shortcuts, so any app can start it. Godot appends the
+	 * "command_line_params" extra to the engine command line; the launcher never uses it, so drop it
+	 * to keep other apps from injecting engine arguments (e.g. a different main pack).
+	 */
+	private static void stripExternalCommandLineParams(Intent intent) {
+		if (intent == null) {
+			return;
+		}
+		try {
+			if (intent.hasExtra("command_line_params")) {
+				Log.w(TAG, "Ignoring externally supplied command_line_params extra.");
+				intent.removeExtra("command_line_params");
+			}
+		} catch (RuntimeException exception) {
+			// Unparcelable extras from another app: discard everything rather than trust any of it.
+			intent.replaceExtras((Bundle) null);
+		}
+	}
+
+	@Override
+	public void onNewIntent(Intent intent) {
+		stripExternalCommandLineParams(intent);
+		super.onNewIntent(intent);
 	}
 
 	private String describeIntent(Intent intent) {

@@ -21,6 +21,7 @@ import com.godot.game.R;
 import com.godot.game.RuntimeLogFiles;
 import com.godot.game.SystemBarInsetsHelper;
 import com.godot.game.llm.Cancellation;
+import com.godot.game.llm.Ja;
 import com.godot.game.llm.ChatSession;
 import com.godot.game.llm.LlmConfig;
 import com.godot.game.llm.LlmSettings;
@@ -90,7 +91,7 @@ public final class LogAnalysisActivity extends AppCompatActivity {
 		list.setAdapter(adapter);
 		int foreground = MaterialColors.getColor(this, com.google.android.material.R.attr.colorOnSurface, 0xFFFFFFFF);
 		toolbar.setNavigationIcon(MaterialSymbols.drawable(this, "arrow_back", foreground, 24));
-		toolbar.setNavigationContentDescription("返回");
+		toolbar.setNavigationContentDescription(Ja.t("返回", "戻る"));
 		toolbar.setNavigationOnClickListener(v -> finish());
 		addMenu(CONFIG, R.string.log_analysis_config, "settings", MenuItem.SHOW_AS_ACTION_ALWAYS, foreground);
 		addMenu(FILES, R.string.log_analysis_files, "description", MenuItem.SHOW_AS_ACTION_IF_ROOM, foreground);
@@ -119,7 +120,7 @@ public final class LogAnalysisActivity extends AppCompatActivity {
 			String failure = null;
 			try {
 				for (File file : RuntimeLogFiles.latest(getApplicationContext())) addUnique(discovered, file);
-			} catch (Exception e) { failure = "无法发现关联日志；仍可分析当前文件"; }
+			} catch (Exception e) { failure = Ja.t("无法发现关联日志；仍可分析当前文件", "関連ログを検出できませんでした。現在のファイルは引き続き分析できます"); }
 			LlmConfig loaded;
 			try { loaded = LlmSettings.read(getApplicationContext()); }
 			catch (IOException e) { loaded = new LlmConfig("", "", "", ""); failure = getString(R.string.log_analysis_config_failed); }
@@ -242,7 +243,7 @@ public final class LogAnalysisActivity extends AppCompatActivity {
 					turn.session = new ChatSession(new OpenAiClient(connection), tools, tools.systemPrompt());
 				}
 				ChatSession.Result result = turn.session.ask(text, token, summary -> post(expected, () -> {
-					if (summary.startsWith("工具失败")) {
+					if (Ja.startsWith(summary, "工具失败", "ツール失敗")) {
 						toolFailures.add(summary);
 						status.setText(R.string.log_analysis_tool_failed);
 					} else status.setText(summary);
@@ -270,7 +271,7 @@ public final class LogAnalysisActivity extends AppCompatActivity {
 		String[] names = new String[candidates.size()];
 		for (int i = 0; i < candidates.size(); i++) {
 			checked[i] = selected.contains(candidates.get(i));
-			names[i] = candidates.get(i).getName() + (candidates.get(i).equals(currentFile) ? "（当前）" : "（最新关联）");
+			names[i] = candidates.get(i).getName() + (candidates.get(i).equals(currentFile) ? Ja.t("（当前）", "（現在）") : Ja.t("（最新关联）", "（最新の関連ログ）"));
 		}
 		AlertDialog dialog = new MaterialAlertDialogBuilder(this).setTitle(R.string.log_analysis_files)
 			.setMultiChoiceItems(names, checked, (d, index, selectedValue) -> checked[index] = selectedValue)
@@ -312,7 +313,7 @@ public final class LogAnalysisActivity extends AppCompatActivity {
 			updateControls();
 			final int expected = generation;
 			dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
-			error.setText("正在加密保存…");
+			error.setText(Ja.t("正在加密保存…", "暗号化して保存中…"));
 			worker.execute(() -> {
 				try {
 					LlmSettings.save(getApplicationContext(), replacement);

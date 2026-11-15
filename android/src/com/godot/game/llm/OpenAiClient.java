@@ -42,17 +42,17 @@ public final class OpenAiClient implements ChatSession.Transport {
 		try (Response response = call.execute()) {
 			cancellation.check();
 			if (!response.isSuccessful()) {
-				throw new IOException("服务返回 HTTP " + response.code()
-					+ "；请检查地址、密钥、模型和工具支持（未上传全文，也不会自动降级）");
+				throw new IOException(Ja.t("服务返回 HTTP ", "サービスが HTTP ") + response.code()
+					+ Ja.t("；请检查地址、密钥、模型和工具支持（未上传全文，也不会自动降级）", " を返しました。アドレス、キー、モデル、ツール対応を確認してください（全文はアップロードされず、自動的な機能縮退も行いません）"));
 			}
-			if (response.body() == null) throw new IOException("服务响应为空");
+			if (response.body() == null) throw new IOException(Ja.t("服务响应为空", "サービスの応答が空です"));
 			ByteArrayOutputStream output = new ByteArrayOutputStream();
 			try (InputStream input = response.body().byteStream()) {
 				byte[] buffer = new byte[8192];
 				int count;
 				while ((count = input.read(buffer)) != -1) {
 					cancellation.check();
-					if (output.size() + count > MAX_RESPONSE_BYTES) throw new IOException("服务响应超出 1 MiB 上限");
+					if (output.size() + count > MAX_RESPONSE_BYTES) throw new IOException(Ja.t("服务响应超出 1 MiB 上限", "サービスの応答が上限の 1 MiB を超えました"));
 					output.write(buffer, 0, count);
 				}
 			}
@@ -61,18 +61,18 @@ public final class OpenAiClient implements ChatSession.Transport {
 					.getJSONArray("choices").getJSONObject(0);
 				String finish = choice.optString("finish_reason", "");
 				if ("length".equals(finish) || "content_filter".equals(finish)) {
-					throw new IOException("服务提前终止（" + finish + "），未获得完整分析；可调整配置后重试");
+					throw new IOException(Ja.t("服务提前终止（", "サービスが途中で終了しました（") + finish + Ja.t("），未获得完整分析；可调整配置后重试", "）。完全な分析は得られていません。設定を見直して再試行できます"));
 				}
 				return choice.getJSONObject("message");
 			} catch (JSONException e) {
-				throw new IOException("服务未返回有效的 Chat Completions 消息；请确认协议和工具支持");
+				throw new IOException(Ja.t("服务未返回有效的 Chat Completions 消息；请确认协议和工具支持", "サービスが有効な Chat Completions メッセージを返しませんでした。プロトコルとツール対応を確認してください"));
 			}
 		} catch (IOException e) {
 			cancellation.check();
 			// Only locally generated messages are safe to show; network errors may embed a URL or headers.
 			String message = e.getMessage();
-			if (message != null && (message.startsWith("服务") || message.startsWith("已停止"))) throw e;
-			throw new IOException("网络请求失败或超时，请检查自定义服务连接");
+			if (Ja.startsWith(message, "服务", "サービス") || Ja.startsWith(message, "已停止", "停止しました")) throw e;
+			throw new IOException(Ja.t("网络请求失败或超时，请检查自定义服务连接", "ネットワーク要求が失敗またはタイムアウトしました。カスタムサービスへの接続を確認してください"));
 		} finally {
 			cancellation.detach(call);
 		}

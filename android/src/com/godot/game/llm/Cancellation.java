@@ -14,7 +14,7 @@ public final class Cancellation {
 	}
 
 	public void check() throws InterruptedIOException {
-		if (cancelled || Thread.currentThread().isInterrupted()) throw new InterruptedIOException("已停止");
+		if (cancelled || Thread.currentThread().isInterrupted()) throw new InterruptedIOException(Ja.t("已停止", "停止しました"));
 	}
 
 	public synchronized void attach(Call next) throws InterruptedIOException {
