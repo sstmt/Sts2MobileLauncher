@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="log_detail_analyze">LLM 分析</string>
+    <string name="log_detail_expand_label">範囲を拡張</string>
+    <string name="log_detail_expand_context">前後にそれぞれ 20 行拡張</string>
+    <string name="log_detail_range_hint">この行を選択しました。すぐにコピー・共有できます。別の行番号をタップすると終点を指定できます</string>
+</resources>

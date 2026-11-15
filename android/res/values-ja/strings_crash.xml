@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sts2_crash_activity_name">クラッシュ復旧</string>
+    <string name="sts2_crash_toolbar_title">クラッシュ復旧</string>
+    <string name="sts2_crash_toolbar_subtitle">ゲームが予期せず停止しました</string>
+    <string name="sts2_crash_title_line">クラッシュを検出しました</string>
+    <string name="sts2_crash_summary_fallback">予期しないエラーにより Android 版が中断されました。</string>
+    <string name="sts2_crash_hint">起動のたびにクラッシュする場合は、まず復旧設定を開いてください。下のレポートはコピー可能で、スクリーンショット向けに小さめのフォントで表示しています。</string>
+    <string name="sts2_crash_badge_renderer">レンダラー · %1$s</string>
+    <string name="sts2_crash_badge_android">Android · %1$s (SDK %2$d)</string>
+    <string name="sts2_crash_badge_build">ビルド · %1$s (%2$s/%3$s)</string>
+    <string name="sts2_crash_section_actions">クイック操作</string>
+    <string name="sts2_crash_section_actions_body">すぐに再試行するか、復旧設定を開いてレンダラーの切り替えや MOD の無効化を行ってから再起動してください。</string>
+    <string name="sts2_crash_action_open_settings">復旧設定を開く</string>
+    <string name="sts2_crash_action_retry_game">ゲームを再起動</string>
+    <string name="sts2_crash_action_copy">レポートをコピー</string>
+    <string name="sts2_crash_action_close">アプリを閉じる</string>
+    <string name="sts2_crash_section_details">クラッシュレポート</string>
+    <string name="sts2_crash_section_details_body">長いスクリーンショットを撮りやすいよう、エラー全文を少し小さめの等幅フォントで下に表示しています。</string>
+    <string name="sts2_crash_detail_fallback">クラッシュの詳細を取得できません。画面に表示されている内容をコピーし、クラッシュ直前に何をしていたかを説明してください。</string>
+    <string name="sts2_crash_copied">クラッシュレポートをクリップボードにコピーしました。</string>
+</resources>

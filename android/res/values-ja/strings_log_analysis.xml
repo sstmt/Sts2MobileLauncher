@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="log_analysis_title">ログ分析 · LLM</string>
+    <string name="log_analysis_privacy">許可したログから、ツールが必要に応じて取り出した断片のみを送信し、全文は自動でアップロードしません。1 つの質問につき最大 24 ラウンドです。会話はメモリ上にのみ保持され、画面を離れるか回転するとキャンセルされ消去されます。</string>
+    <string name="log_analysis_question">問題を説明するか、根拠について追加で質問してください</string>
+    <string name="log_analysis_send">質問を送信</string>
+    <string name="log_analysis_stop">停止</string>
+    <string name="log_analysis_config">LLM 設定</string>
+    <string name="log_analysis_files">許可したログ</string>
+    <string name="log_analysis_restart">最初からやり直す</string>
+    <string name="log_analysis_save">暗号化して保存</string>
+    <string name="log_analysis_cancel">キャンセル</string>
+    <string name="log_analysis_confirm">選択を確定して会話を消去</string>
+    <string name="log_analysis_consent_title">選択したログの断片を送信しますか？</string>
+    <string name="log_analysis_consent">質問、ファイル名、行数、サイズ、およびモデルが必要に応じて読み取り・検索したログ断片が次の宛先に送信されます：\n%1$s\n\n許可したファイル：\n%2$s\n\n断片には個人情報や認証情報が含まれる可能性があります。ログ内の指示が実行されることはありませんが、モデルの結果は必ず確認してください。HTTP（平文）のアドレスはネットワーク上で盗聴される可能性があります。同意はこのセッション中のみ記憶されます。設定やファイルを変更すると履歴が消去され、改めて同意を求めます。</string>
+    <string name="log_analysis_agree">同意して送信</string>
+    <string name="log_analysis_ready">質問できます · 24 ラウンドまで</string>
+    <string name="log_analysis_loading">準備中…</string>
+    <string name="log_analysis_working">分析中 · 24 ラウンドまで</string>
+    <string name="log_analysis_stopped">停止しました</string>
+    <string name="log_analysis_welcome">まず右上で OpenAI 互換のカスタムサービスを設定してから質問してください。明示的にチェックしたログだけが読み取られます。おすすめの質問：「クラッシュの原因を特定し、ファイル名と行番号を引用して、根拠と推測を区別してください。」\n文字を長押しまたは選択するとコピーできます。ツールの進行状況にはファイルと行範囲のみが表示されます。</string>
+    <string name="log_analysis_no_files">許可するログを選択してください</string>
+    <string name="log_analysis_select_notice">現在のファイルのみがチェックされます。最新の godot.log / sts2.log は自分でチェックする必要があります。確定すると現在のリクエストを停止し、会話を消去します。</string>
+    <string name="log_analysis_config_notice">Base URL には /v1 のベース URL または完全な /chat/completions を入力できます。サイトのルート URL の場合は /v1 が補われます。ローカルサービスでは API Key を空欄にできます。Thinking effort を空欄にすると送信しません。設定を変更すると会話は消去されます。</string>
+    <string name="log_analysis_base_url">Base URL（HTTP / HTTPS）</string>
+    <string name="log_analysis_api_key">API Key（暗号化して保存、空欄可）</string>
+    <string name="log_analysis_model">Model ID</string>
+    <string name="log_analysis_effort">Thinking effort（既定は空欄。例：low / medium / high）</string>
+    <string name="log_analysis_user">あなた</string>
+    <string name="log_analysis_assistant">分析</string>
+    <string name="log_analysis_notice">お知らせ</string>
+    <string name="log_analysis_generic_error">分析に失敗しました。サービスとログの状態を確認してください。全文はアップロードされていません。再度質問できます。</string>
+    <string name="log_analysis_config_failed">暗号化された設定の読み込みに失敗しました。元の設定は消去されていません。設定を開いて保存し直してください。</string>
+    <string name="log_analysis_info">分析について</string>
+    <string name="log_analysis_close">OK</string>
+    <string name="log_analysis_tool_failed">ツールでの読み取りに失敗しました</string>
+    <string name="log_analysis_failed">分析に失敗 · 再試行できます</string>
+    <string name="log_analysis_budget">上限に達しました · 追加の質問は可能です</string>
+</resources>
